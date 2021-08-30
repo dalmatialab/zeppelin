@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zeppelin
+spec:
+  replicas: {{ .Values.replicas}}
+  selector:
+    matchLabels:
+      app: zeppelin
+  template:
+    metadata:
+      labels:
+        app: zeppelin
+    spec:
+      containers:
+      - name: zeppelin
+        image: {{ .Values.image }}:{{ .Values.imageTag}}
+        imagePullPolicy: {{ .Values.imagePullPolicy}}
+        ports:
+          - containerPort: 8080
+            name: web
+        env:
+          - name: ZEPPELIN_PORT
+            value: "8080"
+          - name: SPARK_HOME
+            value: "/spark/"
+          - name: ZEPPELIN_JAVA_OPTS
+            value: >-
+              -Dspark.executor.memory={{ .Values.spark.executorMemory }}
+              -Dspark.executor.cores={{ .Values.spark.executorCores }}
+              -Dspark.master={{ .Values.spark.master }}
+              -Dspark.cores.max={{ .Values.spark.coresMax }}
+        {{- if .Values.storage.enabled }}
+        volumeMounts:
+        {{- .Values.storage.volumeMounts | toYaml | trimSuffix "\n" | nindent 8 }}
+      	{{- end }}
+      restartPolicy: {{ .Values.restartPolicy }}
+      {{- if .Values.storage.enabled }}
+      volumes:
+      {{- .Values.storage.volumes | toYaml | trimSuffix "\n" | nindent 6 }}
+      {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+        zeppelin: {{ .Values.nodeSelector | quote }}
+      {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zeppelin
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    name: web
+  selector:
+    app: zeppelin
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zeppelin-ext
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    name: web
+    protocol: TCP
+    nodePort: {{ .Values.nodePort }}
+    targetPort: 8080
+  selector:
+    app: zeppelin

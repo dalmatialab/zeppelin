@@ -1,0 +1,23 @@
+image: dalmatialab/zeppelin
+imageTag: 0.8.0-rc-1
+replicas: 1
+imagePullPolicy: Always
+restartPolicy: Always
+nodeSelector: true
+nodePort: 
+
+storage:
+  enabled: false
+  volumeMounts:
+    - name: 
+      mountPath: 
+  volumes:
+    - name: 
+      hostPath:
+        path: 
+
+spark:
+  executorMemory: 1024m
+  executorCores: 4
+  master: 
+  coresMax: 4
