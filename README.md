@@ -3,8 +3,8 @@
 
 # Supported tags and respective Dockerfile links
 
- - 0.8.0-rc-1
- - 0.8.0-rc-2
+ - [0.8.0-rc-1](https://github.com/dalmatialab/zeppelin/blob/a1f0718a054a22fc1969b5f86f6b972e059c4e6f/Dockerfile)
+ - [0.8.0-rc-2](https://github.com/dalmatialab/zeppelin/blob/dd245fa40a3b244a3a4ab4c9bb9b4cbd685c5ded/Dockerfile)
 
 # What is Zeppelin ? 
 
