@@ -23,6 +23,12 @@ Where:
  - `image` is Docker image name
  - `tag` is Docker image version
 
+## Environment variables
+
+**TZ**
+
+This is *optional* variable. It specifes timezone. Default value is `Europe/Zagreb`.
+
 ## Ports
 
 Zeppelin exposes user interface at port 8080.

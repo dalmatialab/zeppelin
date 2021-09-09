@@ -1,6 +1,11 @@
 FROM apache/zeppelin:0.8.0
 LABEL maintainer="dalmatialab"
 
+# Install tzdata and set right timezone
+ENV DEBIAN_FRONTEND="noninteractive"
+RUN apt update && apt-get -y install tzdata
+ENV TZ=Europe/Zagreb
+
 # Environment variables
 ENV SPARK_VERSION=2.4.8
 ENV HADOOP_SPARK_VERSION=2.7
