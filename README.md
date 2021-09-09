@@ -4,6 +4,7 @@
 # Supported tags and respective Dockerfile links
 
  - 0.8.0-rc-1
+ - 0.8.0-rc-2
 
 # What is Zeppelin ? 
 
